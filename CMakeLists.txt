@@ -25,20 +25,6 @@ if("${CMAKE_CXX_COMPILER_VERSION}" STREQUAL "")
 	endif()
 endif()
 
-# GCC ist not supported until 4.9
-# Clang ist not supported until 3.6
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9)
-		message(FATAL_ERROR "GCC version must be at least 4.9. Earlier versions miss std::regex support.")
-	endif()
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-	if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.6)
-		message(FATAL_ERROR "Clang version must be at least 3.6! Earlier versions don't support debug information for auto.")
-	endif()
-else()
-	message(FATAL_ERROR "You are using an unsupported compiler! Compilation has only been tested with Clang and GCC.")
-endif()
-
 # Compiler flags
 # TOD0: -std=c++14 will be obsolete when reverting to minimum CMake version 3.2 and
 #       using set_property(TARGET ${TARGET_NAME} PROPERTY CXX_STANDARD 14) again.

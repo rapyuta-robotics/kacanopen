@@ -115,6 +115,8 @@ namespace kaco {
 		/// The PDO sub-protocol
 		PDO pdo;
 
+		/// Gets the raw CAN message
+		void get_raw_can_message(Message *message);
 
 	private:
 
