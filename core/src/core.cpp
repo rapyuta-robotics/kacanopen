@@ -94,7 +94,7 @@ bool Core::start(const std::string busname, const std::string& baudrate) {
 	}
 
 	m_running = true;
-	m_loop_thread = std::thread(&Core::receive_loop, this, std::ref(m_running));
+	//m_loop_thread = std::thread(&Core::receive_loop, this, std::ref(m_running));
 	return true;
 
 }
@@ -114,7 +114,7 @@ void Core::stop() {
 	assert(m_running);
 
 	m_running = false;
-	m_loop_thread.detach();
+	//m_loop_thread.detach();
 
 	DEBUG_LOG("Calling canClose.");
 	canClose_driver(m_handle);
@@ -137,6 +137,10 @@ void Core::receive_loop(std::atomic<bool>& running) {
 void Core::register_receive_callback(const MessageReceivedCallback& callback) {
 	std::lock_guard<std::mutex> scoped_lock(m_receive_callbacks_mutex);
 	m_receive_callbacks.push_back(callback);
+}
+
+void Core::get_raw_can_message(Message *message) {
+   canReceive_driver(m_handle, message);
 }
 
 void Core::received_message(const Message& message) {
